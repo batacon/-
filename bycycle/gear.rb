@@ -1,11 +1,17 @@
 class Gear
+  attr_reader :chainring, :cog
+  # attr_reader :cogで以下が定義される
+  # def cog
+  #   @cog
+  # end
+
   def initialize(chainring, cog)
     @chainring = chainring
     @cog = cog
   end
 
   def ratio
-    @chainring / @cog.to_f # インスタンス変数を直接参照するのは破滅への道
+    chainring / cog.to_f
   end
 
   def gear_inches
