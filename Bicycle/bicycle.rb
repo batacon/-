@@ -1,4 +1,8 @@
 class Bicycle
+  # コードを全てRoadBikeに移す
+end
+
+class RoadBike < Bicycle
   attr_reader :size, :tape_color
 
   def initialize(args)
