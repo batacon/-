@@ -9,9 +9,6 @@ class Bicycle
     post_initialize(args)
   end
 
-  def post_initialize(args)
-    nil
-  end
 
   def spares
     {
@@ -20,17 +17,20 @@ class Bicycle
     }.merge(local_spares)
   end
 
-  # サブクラスがオーバーライドするためのフック
+  def default_tire_size
+    raise NotImplementedError, "This #{self.class} cannot respond to:"
+  end
+
+  def post_initialize(args)
+    nil
+  end
+
   def local_spares
     {}
   end
 
   def default_chain
     '10-speed'
-  end
-
-  def default_tire_size
-    raise NotImplementedError, "This #{self.class} cannot respond to:"
   end
 end
 
