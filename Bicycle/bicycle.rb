@@ -17,7 +17,12 @@ class Bicycle
     {
       tire_size: tire_size,
       chain: chain
-    }
+    }.merge(local_spares)
+  end
+
+  # サブクラスがオーバーライドするためのフック
+  def local_spares
+    {}
   end
 
   def default_chain
@@ -36,8 +41,8 @@ class RoadBike < Bicycle
     @tape_color = args[:tape_color]
   end
 
-  def spares
-    super.merge({ tape_color: tape_color })
+  def local_spares
+    { tape_color: tape_color }
   end
 
   def default_tire_size
@@ -54,8 +59,8 @@ class MountainBike < Bicycle
     super(args)
   end
 
-  def spares
-    super.merge({ rear_shock: rear_shock })
+  def local_spares
+    { rear_shock: rear_shock }
   end
 
   def default_tire_size
