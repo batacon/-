@@ -1,13 +1,19 @@
 class Bicycle
-  # コードを全てRoadBikeに移す
+  attr_reader :size, :chain, :tire_size
+
+  def initialize(args={})
+    @size = args[:size]
+    @chain = args[:chain]
+    @tire_size = args[:tire_size]
+  end
 end
 
 class RoadBike < Bicycle
-  attr_reader :size, :tape_color
+  attr_reader :tape_color
 
   def initialize(args)
-    @size = args[:size]
     @tape_color = args[:tape_color]
+    super(args)
   end
 
   def spares
@@ -25,7 +31,7 @@ class MountainBike < Bicycle
   def initialize(args)
     @front_shock = args[:front_shock]
     @rear_shock = args[:rear_shock]
-    super(args) # tire_sizeやtape_colorが間違って入ってしまう
+    super(args)
   end
 
   def spares
