@@ -5,28 +5,31 @@ class Schedule
   end
 end
 
-class Bicycle
-  attr_reader :schedule, :size, :chain, :tire_size
+module Schedulable
+  attr_writer :schedule
 
-  # Scheduleを注入し、初期値を設定する
-  def initialize(args={})
-    @schedule = args[:schedule] || Schedule.new
-    @size = args[:size]
-    @chain = args[:chain]
-    @tire_size = args[:tire_size]
+  def schedule
+    @schedule ||= ::Schedule.new
   end
 
-  # 与えられた期間の間、bicycleが利用可能であればtrueを返す
   def schedulable?(start_date, end_date)
     !scheduled?(start_date - lead_days, end_date)
   end
 
-  # scheduleの答えを返す
   def scheduled?(start_date, end_date)
     schedule.scheduled?(self, start_date, end_date)
   end
 
-  # bicycleがスケジュール可能となるまでの準備日数を返す
+  # 必要に応じてインクルードする側で置き換える
+  def lead_days
+    0
+  end
+end
+
+
+class Bicycle
+  include Schedulable
+
   def lead_days
     1
   end
