@@ -1,8 +1,20 @@
 class Bicycle
-  attr_reader :size, :chain, :tire_size
+  attr_reader :size, :parts
 
   def initialize(args={})
     @size = args[:size]
+    @parts = args[:parts]
+  end
+
+  def spares
+    parts.spares
+  end
+end
+
+class Parts
+  attr_reader :chain, :tire_size
+
+  def initialize(args={})
     @chain = args[:chain] || default_chain
     @tire_size = args[:tire_size] || default_tire_size
 
@@ -21,6 +33,7 @@ class Bicycle
     raise NotImplementedError, "This #{self.class} cannot respond to:"
   end
 
+  # subclass may override
   def post_initialize(args)
     nil
   end
@@ -34,7 +47,7 @@ class Bicycle
   end
 end
 
-class RoadBike < Bicycle
+class RoadBikeParts < Parts
   attr_reader :tape_color
 
   def post_initialize(args)
@@ -50,7 +63,7 @@ class RoadBike < Bicycle
   end
 end
 
-class MountainBike < Bicycle
+class MountainBikeParts < Parts
   attr_reader :front_shock, :rear_shock
 
   def initialize(args)
